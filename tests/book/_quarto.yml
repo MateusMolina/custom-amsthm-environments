@@ -1,0 +1,31 @@
+project:
+  type: book
+  output-dir: _output
+
+book:
+  title: "Test Book for Custom AmSThm Environments"
+  author: "Test Author"
+  chapters:
+    - index.qmd
+    - chapter2.qmd
+    - chapter3.qmd
+
+number-sections: true
+
+custom-amsthm:
+  - key: prm
+    name: Problem
+    #numbering-style: section (default)
+  - key: tsk
+    name: Task
+    numbering-style: global
+
+filters:
+  - custom-amsthm-environments
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: book
+    keep-tex: true

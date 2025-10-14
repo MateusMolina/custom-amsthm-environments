@@ -1,0 +1,43 @@
+---
+title: "Chapter 3: Cross-References Across Chapters"
+---
+
+This chapter tests cross-references to environments defined in other chapters.
+
+## References to Previous Chapter
+
+We can reference problems from Chapter 2:
+
+- @prm-chapter2-first from Chapter 2
+- @prm-chapter2-third from Chapter 2, Section 2
+
+And tasks:
+
+- @tsk-chapter2-first 
+- @tsk-chapter2-second
+
+## New Problems in This Chapter
+
+::: {#prm-chapter3-first}
+## Chapter 3 Problem
+
+This is the first problem in Chapter 3.
+:::
+
+::: {#tsk-chapter3-final}
+Try rendering the entire book and verify all cross-references work.
+:::
+
+Final check: @prm-chapter3-first and @tsk-chapter3-final should be properly numbered.
+
+## Integration with Built-in Environments
+
+The custom environments coexist with Quarto's built-in theorem environments:
+
+::: {#thm-builtin}
+## Built-in Theorem
+
+This uses Quarto's standard theorem environment.
+:::
+
+Compare @thm-builtin (built-in) with @prm-chapter3-first (custom).

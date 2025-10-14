@@ -1,0 +1,108 @@
+---
+title: "Test Article for Custom AmSThm Environments"
+author: "Test Author"
+date: today
+format:
+  html:
+    toc: true
+    number-sections: true
+  pdf:
+    documentclass: article
+    keep-tex: true
+    number-sections: true
+custom-amsthm:
+  - key: prm
+    name: Problem
+    numbering-style: section
+  - key: tsk
+    name: Task
+    numbering-style: global
+  - key: usecase
+    name: "Use Case"
+    numbered: false
+filters:
+  - custom-amsthm-environments
+---
+
+## Introduction
+
+This is a minimal test article to demonstrate the custom-amsthm-environments extension in a single-document format.
+
+::: {#prm-first}
+## First Problem
+
+Verify that this extension works correctly.
+:::
+
+As stated in @prm-first, we need to ensure proper functionality.
+
+## Section with Multiple Environments
+
+Here we test different types of custom environments:
+
+::: {#prm-second}
+This problem doesn't have a title.
+:::
+
+::: {#tsk-key}
+## Key Task
+
+For all $x \in \mathbb{R}$, we have $x^2 \geq 0$.
+:::
+
+::: {#usecase-observation}
+This is just a unnumbered use case description
+:::
+
+References: @prm-second, @tsk-key work in the text.
+
+## Testing Numbering
+
+With section-based numbering, problems in different sections should have different prefixes:
+
+::: {#prm-subsection1}
+Problem in section 2.2.
+:::
+
+See @prm-subsection1.
+
+## Subsection Level
+
+::: {#prm-subsection2}
+## Deeper Problem
+
+This problem is in section 2.2.1.
+:::
+
+Global numbering (tasks) should just increment:
+
+::: {#tsk-second}
+Another task with global numbering.
+:::
+
+Compare @tsk-key (Task 1) with @tsk-second (Task 2).
+
+## Cross-References Summary
+
+Let's verify all our cross-references work:
+
+1. Problems (section-based): @prm-first, @prm-second, @prm-subsection1, @prm-subsection2
+2. Tasks (global): @tsk-key, @tsk-second
+3. Unnumbered use cases cannot be referenced reliably (@usecase-observation)
+
+
+## Built-in Environments
+
+The extension should coexist with Quarto's standard environments:
+
+::: {#thm-standard}
+## Standard Theorem
+
+This uses Quarto's built-in theorem support.
+:::
+
+::: {#def-standard}
+A **widget** is a conceptual object.
+:::
+
+Both @thm-standard and @def-standard should work alongside our custom environments like @prm-first and @tsk-key.

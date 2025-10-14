@@ -1,0 +1,43 @@
+---
+title: "Chapter 2: Basic Examples"
+---
+
+The default numbering style is `section`, which numbers environments within sections.
+
+## First Section
+
+::: {#prm-chapter2-first}
+This is the first problem in Chapter 2, Section 1.
+:::
+
+::: {#prm-chapter2-second}
+## Titled Problem
+
+This is the second problem with a title.
+:::
+
+We can reference @prm-chapter2-first and @prm-chapter2-second.
+
+## Second Section
+
+::: {#prm-chapter2-third}
+This problem should be numbered as 3.3 in PDF.
+:::
+
+See @prm-chapter2-third for details.
+
+## Global Numbering Example
+
+Tasks use global numbering:
+
+::: {#tsk-chapter2-first}
+Complete this task.
+:::
+
+::: {#tsk-chapter2-second}
+## Advanced Task
+
+This builds on @tsk-chapter2-first.
+:::
+
+Note that tasks (@tsk-chapter2-first and @tsk-chapter2-second) are numbered globally, not by section.

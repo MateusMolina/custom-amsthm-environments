@@ -1,3 +1,7 @@
 example_files/libs
 example.*
 !example*.qmd
+_output
+
+tests/**/_extensions
+.quarto
