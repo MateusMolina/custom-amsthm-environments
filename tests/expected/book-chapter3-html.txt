@@ -1,16 +1,16 @@
 === Expected HTML snippets for book chapter2.html ===
 
 === Cross-reference to chapter 2 problem 1 ===
-<a href="#prm-chapter2-first" class="quarto-xref">Problem&nbsp;2.1</a>
+<a href="chapter2.html#prm-chapter2-first" class="quarto-xref">Problem&nbsp;2.1</a>
 
 === Cross-reference to chapter 2 problem 3 ===
-<a href="#prm-chapter2-third" class="quarto-xref">Problem&nbsp;2.3</a>
+<a href="chapter2.html#prm-chapter2-third" class="quarto-xref">Problem&nbsp;2.3</a>
 
 === Cross-reference to chapter 2 task 1 ===
-<a href="#tsk-chapter2-first" class="quarto-xref">Task&nbsp;1</a>
+<a href="chapter2.html#tsk-chapter2-first" class="quarto-xref">Task&nbsp;1</a>
 
 === Cross-reference to chapter 2 task 2 ===
-<a href="#tsk-chapter2-second" class="quarto-xref">Task&nbsp;2</a>
+<a href="chapter2.html#tsk-chapter2-second" class="quarto-xref">Task&nbsp;2</a>
 
 === New problem in chapter 3 ===
 <div id="prm-chapter3-first" class="theorem">

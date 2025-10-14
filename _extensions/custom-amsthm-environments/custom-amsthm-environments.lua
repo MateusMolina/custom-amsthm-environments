@@ -7,6 +7,8 @@ local amsthm_counters = {}
 local current_counters = {}
 local section_counters = {}  -- Track counters per section for section-based numbering
 local current_section = nil   -- Track current section number
+local current_file = nil      -- Track current output file name
+local new_ids_this_chapter = {}  -- Track IDs that are new in this chapter
 local state_file = nil  -- Will be set based on project
 
 -- Simple hash function for strings
@@ -26,7 +28,7 @@ function read_state()
     file:close()
     if content and content ~= "" then
       -- Parse JSON manually (simple parsing for our use case)
-      local state = {counters = {}, values = {}}
+      local state = {counters = {}, values = {}, files = {}}
       
       -- Extract global counters
       local counters_section = content:match('"counters"%s*:%s*{([^}]+)}')
@@ -37,7 +39,10 @@ function read_state()
       end
       
       -- Extract counter values (id -> number mappings)
-      local values_section = content:match('"values"%s*:%s*{(.+)}%s*}%s*$')
+      local values_section = content:match('"values"%s*:%s*{(.+)},?%s*"files"')
+      if not values_section then
+        values_section = content:match('"values"%s*:%s*{(.+)}%s*}%s*$')
+      end
       if values_section then
         for key_section in values_section:gmatch('"([^"]+)"%s*:%s*{([^}]+)}') do
           local key = key_section
@@ -51,10 +56,25 @@ function read_state()
         end
       end
       
+      -- Extract file information (id -> filename mappings)
+      local files_section = content:match('"files"%s*:%s*{(.+)}%s*}%s*$')
+      if files_section then
+        for key_section in files_section:gmatch('"([^"]+)"%s*:%s*{([^}]+)}') do
+          local key = key_section
+          local files_str = files_section:match('"' .. key .. '"%s*:%s*{([^}]+)}')
+          if files_str then
+            state.files[key] = {}
+            for id, filename in files_str:gmatch('"([^"]+)"%s*:%s*"([^"]+)"') do
+              state.files[key][id] = filename
+            end
+          end
+        end
+      end
+      
       return state
     end
   end
-  return {counters = {}, values = {}}
+  return {counters = {}, values = {}, files = {}}
 end
 
 -- Function to write state to file
@@ -97,6 +117,40 @@ function write_state()
       file:write("}")
       first = false
     end
+    file:write("\n  },\n")
+    
+    -- Write file information (id -> filename mappings)
+    -- Preserve file names from previous state and only update for IDs numbered in this chapter
+    file:write('  "files": {\n')
+    first = true
+    for key, env in pairs(custom_amsthm_envs) do
+      if current_counters[key] then
+        if not first then
+          file:write(",\n")
+        end
+        file:write(string.format('    "%s": {', key))
+        local first_val = true
+        for id, _ in pairs(current_counters[key]) do
+          if not first_val then
+            file:write(", ")
+          end
+          -- Only set file name to current_file for IDs numbered in THIS chapter
+          -- Otherwise preserve the existing file name from state
+          local file_for_id
+          if new_ids_this_chapter[key] and new_ids_this_chapter[key][id] then
+            -- This ID was numbered in this chapter, set its file to current_file
+            file_for_id = current_file or ""
+          else
+            -- This ID was loaded from previous state, preserve its file name
+            file_for_id = (env.files and env.files[id]) or ""
+          end
+          file:write(string.format('"%s": "%s"', id, file_for_id))
+          first_val = false
+        end
+        file:write("}")
+        first = false
+      end
+    end
     file:write("\n  }\n")
     
     file:write("}\n")
@@ -115,6 +169,24 @@ function process_custom_amsthm(meta)
   end
   local hash = string_hash(project_id)
   state_file = string.format(".quarto/amsthm-state-%d.json", hash)
+  
+  -- Extract current output file name from PANDOC_STATE if available
+  if PANDOC_STATE and PANDOC_STATE.output_file then
+    current_file = PANDOC_STATE.output_file
+  elseif pandoc and pandoc.meta and pandoc.meta["output-file"] then
+    current_file = pandoc.utils.stringify(pandoc.meta["output-file"])
+  end
+  
+  -- If we can't get it from Pandoc, try to infer from the title or use a default
+  if not current_file and meta.title then
+    -- Try to extract from title for book chapters
+    local title_str = pandoc.utils.stringify(meta.title)
+    -- Look for patterns like "Chapter 2" and convert to "chapter2.html"
+    local chapter_match = title_str:match("[Cc]hapter%s*(%d+)")
+    if chapter_match then
+      current_file = "chapter" .. chapter_match .. ".html"
+    end
+  end
   
   -- Extract chapter number from title metadata if in book mode
   -- Look for Span with class "chapter-number" in the title
@@ -185,12 +257,21 @@ function process_custom_amsthm(meta)
         amsthm_counters[key] = 0
       end
       
-      -- Load previous counter values for cross-references
+      -- Load previous counter values and file information for cross-references
       if previous_state.values[key] then
         current_counters[key] = previous_state.values[key]
       else
         current_counters[key] = {}
       end
+      
+      -- Store file information for cross-chapter references
+      if not previous_state.files then
+        previous_state.files = {}
+      end
+      if not previous_state.files[key] then
+        previous_state.files[key] = {}
+      end
+      custom_amsthm_envs[key].files = previous_state.files[key]
       
       section_counters[key] = {}  -- Track section-based counters
       
@@ -282,6 +363,11 @@ function handle_amsthm_div(div)
           current_number = tostring(amsthm_counters[key])
         end
         current_counters[key][id] = current_number
+        -- Track that this ID was numbered in this chapter
+        if not new_ids_this_chapter[key] then
+          new_ids_this_chapter[key] = {}
+        end
+        new_ids_this_chapter[key][id] = true
         label = "\\label{" .. id .. "}"
       end
       
@@ -383,9 +469,18 @@ function handle_amsthm_cite(cite)
           else
             -- For HTML, create a link matching Quarto's built-in format
             local counter_val = current_counters[key][id]
+            
+            -- Determine the href - include file name for cross-chapter references
+            local href = "#" .. id
+            local ref_file = env.files and env.files[id]
+            if ref_file and ref_file ~= "" and ref_file ~= current_file then
+              -- Cross-chapter reference - include the file name
+              href = ref_file .. "#" .. id
+            end
+            
             return pandoc.Link(
               {pandoc.Str(env.reference_prefix), pandoc.Str("\u{00A0}"), pandoc.Str(counter_val)}, 
-              "#" .. id, 
+              href, 
               "", 
               {class = "quarto-xref"}
             )

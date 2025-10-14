@@ -41,3 +41,9 @@ This builds on @tsk-chapter2-first.
 :::
 
 Note that tasks (@tsk-chapter2-first and @tsk-chapter2-second) are numbered globally, not by section.
+
+::: {#thm-in-chapter2}
+## Theorem in chapter 2
+
+If this, then that.
+:::

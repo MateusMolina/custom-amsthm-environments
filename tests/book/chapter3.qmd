@@ -40,4 +40,4 @@ The custom environments coexist with Quarto's built-in theorem environments:
 This uses Quarto's standard theorem environment.
 :::
 
-Compare @thm-builtin (built-in) with @prm-chapter3-first (custom).
+Compare @thm-builtin (built-in) and @thm-in-chapter2 (bult-in, defined in a different chapter) with @prm-chapter3-first (custom). 
