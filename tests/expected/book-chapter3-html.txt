@@ -1,0 +1,29 @@
+=== Expected HTML snippets for book chapter2.html ===
+
+=== Cross-reference to chapter 2 problem 1 ===
+<a href="#prm-chapter2-first" class="quarto-xref">Problem&nbsp;2.1</a>
+
+=== Cross-reference to chapter 2 problem 3 ===
+<a href="#prm-chapter2-third" class="quarto-xref">Problem&nbsp;2.3</a>
+
+=== Cross-reference to chapter 2 task 1 ===
+<a href="#tsk-chapter2-first" class="quarto-xref">Task&nbsp;1</a>
+
+=== Cross-reference to chapter 2 task 2 ===
+<a href="#tsk-chapter2-second" class="quarto-xref">Task&nbsp;2</a>
+
+=== New problem in chapter 3 ===
+<div id="prm-chapter3-first" class="theorem">
+<p><span class="theorem-title"><strong>Problem 3.1 (Chapter 3 Problem)</strong></span> This is the first problem in Chapter 3.</p>
+</div>
+
+=== Task in chapter 3 ===
+<div id="tsk-chapter3-final" class="theorem">
+<p><span class="theorem-title"><strong>Task 3</strong></span> Try rendering the entire book and verify all cross-references work.</p>
+</div>
+
+=== Cross-reference to prm-chapter2-first ===
+<a href="#prm-chapter3-first" class="quarto-xref">Problem&nbsp;3.1</a>
+
+=== Cross-reference to tsk-chapter2-final ===
+<a href="#tsk-chapter3-final" class="quarto-xref">Task&nbsp;3</a>

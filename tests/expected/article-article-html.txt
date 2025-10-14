@@ -1,0 +1,43 @@
+=== Test problem 1 ===
+<div id="prm-first" class="theorem">
+<p><span class="theorem-title"><strong>Problem 1 (First Problem)</strong></span> Verify that this extension works correctly.</p>
+</div>
+
+=== Test Problem 1 reference ===
+<a href="#prm-first" class="quarto-xref">Problem&nbsp;1</a>
+
+=== Problem without title ===
+<div id="prm-second" class="theorem">
+<p><span class="theorem-title"><strong>Problem 2</strong></span> This problem doesn’t have a title.</p>
+</div>
+
+=== Reference to Problem 2 ===
+<div id="tsk-key" class="theorem">
+<p><span class="theorem-title"><strong>Task 1 (Key Task)</strong></span> For all <span class="math inline">\(x \in \mathbb{R}\)</span>, we have <span class="math inline">\(x^2 \geq 0\)</span>.</p>
+</div>
+
+=== Reference to Task 1 ===
+<a href="#tsk-key" class="quarto-xref">Task&nbsp;1</a>
+
+=== Unnumbered use case ===
+<div id="usecase-observation" class="theorem">
+<p><span class="theorem-title"><strong>Use Case</strong></span> This is just a unnumbered use case description</p>
+</div>
+
+=== Reference to unnumbered use case ===
+<div id="tsk-second" class="theorem">
+<p><span class="theorem-title"><strong>Task 2</strong></span> Another task with global numbering.</p>
+</div>
+
+=== Reference to Task 2 ===
+<a href="#tsk-second" class="quarto-xref">Task&nbsp;2</a>
+
+=== Problem in subsection ===
+<div id="prm-subsection1" class="theorem">
+<p><span class="theorem-title"><strong>Problem 3</strong></span> Problem in section 2.2.</p>
+</div>
+
+=== Reference to Problem 3 ===
+<div id="prm-subsection2" class="theorem">
+<p><span class="theorem-title"><strong>Problem 4 (Deeper Problem)</strong></span> This problem is in section 2.2.1.</p>
+</div>

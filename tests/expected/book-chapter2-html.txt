@@ -1,0 +1,33 @@
+=== Chapter 2 Snippets ===
+<div id="prm-chapter2-first" class="theorem">
+<p><span class="theorem-title"><strong>Problem 2.1</strong></span> This is the first problem in Chapter 2, Section 1.</p>
+</div>
+
+=== Cross-reference 1 ===
+<a href="#prm-chapter2-first" class="quarto-xref">Problem&nbsp;1</a>
+
+=== Problem with title ===
+<div id="prm-chapter2-second" class="theorem">
+<p><span class="theorem-title"><strong>Problem 2.2 (Titled Problem)</strong></span> This is the second problem with a title.</p>
+</div>
+
+=== Cross-reference 2 ===
+<a href="#prm-chapter2-second" class="quarto-xref">Problem&nbsp;2</a>
+
+=== Problem with deeper numbering ===
+<div id="prm-chapter2-third" class="theorem">
+<p><span class="theorem-title"><strong>Problem 2.3</strong></span> This problem should be numbered as 3.3 in PDF.</p>
+</div>
+
+=== Cross-reference 3 ===
+<a href="#prm-chapter2-third" class="quarto-xref">Problem&nbsp;2.3</a>
+
+=== Task without title ===
+<div id="tsk-chapter2-first" class="theorem">
+<p><span class="theorem-title"><strong>Task 1</strong></span> Complete this task.</p>
+</div>
+
+=== Reference to Task 1 ===
+<div id="tsk-chapter2-second" class="theorem">
+<p><span class="theorem-title"><strong>Task 2 (Advanced Task)</strong></span> This builds on <a href="#tsk-chapter2-first" class="quarto-xref">Task&nbsp;1</a>.</p>
+</div>
