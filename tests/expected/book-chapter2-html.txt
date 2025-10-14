@@ -4,7 +4,7 @@
 </div>
 
 === Cross-reference 1 ===
-<a href="#prm-chapter2-first" class="quarto-xref">Problem&nbsp;1</a>
+<a href="#prm-chapter2-first" class="quarto-xref">Problem&nbsp;2.1</a>
 
 === Problem with title ===
 <div id="prm-chapter2-second" class="theorem">
@@ -12,7 +12,7 @@
 </div>
 
 === Cross-reference 2 ===
-<a href="#prm-chapter2-second" class="quarto-xref">Problem&nbsp;2</a>
+<a href="#prm-chapter2-second" class="quarto-xref">Problem&nbsp;2.2</a>
 
 === Problem with deeper numbering ===
 <div id="prm-chapter2-third" class="theorem">

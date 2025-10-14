@@ -361,9 +361,7 @@ def run_tests_for_project(project_name, test_files, tests_dir):
         all_test_results.extend(test_results)
 
         total = passed + failed
-        logger.info(
-            f"Tests run: {total}, Failures: {failed}, Errors: 0, Skipped: 0, Time elapsed: 0 sec"
-        )
+        logger.info(f"Tests run: {total}, Failures: {failed}")
 
         # Show failures if any
         if failed > 0:
@@ -388,7 +386,7 @@ def run_tests_for_project(project_name, test_files, tests_dir):
         logger.info("")
 
     total = total_passed + total_failed
-    logger.info(f"Tests run: {total}, Failures: {total_failed}, Errors: 0, Skipped: 0")
+    logger.info(f"Tests run: {total}, Failures: {total_failed}")
     logger.info("")
 
     return total_failed == 0
