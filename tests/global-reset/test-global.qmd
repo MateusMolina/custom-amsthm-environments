@@ -1,0 +1,34 @@
+---
+title: "Global Numbering Reset Test"
+format:
+  html:
+    toc: false
+custom-amsthm:
+  - key: tsk
+    name: Task
+    numbering-style: global
+filters:
+  - custom-amsthm-environments
+---
+
+This test verifies that global numbering resets between renders.
+
+::: {#tsk-first}
+## First Task
+
+This should always be Task 1.
+:::
+
+::: {#tsk-second}
+## Second Task
+
+This should always be Task 2.
+:::
+
+::: {#tsk-third}
+## Third Task
+
+This should always be Task 3.
+:::
+
+References: @tsk-first, @tsk-second, @tsk-third

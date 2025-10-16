@@ -1,0 +1,23 @@
+=== First Task is Task 1 ===
+<div id="tsk-first" class="theorem">
+<p><span class="theorem-title"><strong>Task 1 (First Task)</strong></span> This should always be Task 1.</p>
+</div>
+
+=== Second Task is Task 2 ===
+<div id="tsk-second" class="theorem">
+<p><span class="theorem-title"><strong>Task 2 (Second Task)</strong></span> This should always be Task 2.</p>
+</div>
+
+=== Third Task is Task 3 ===
+<div id="tsk-third" class="theorem">
+<p><span class="theorem-title"><strong>Task 3 (Third Task)</strong></span> This should always be Task 3.</p>
+</div>
+
+=== Reference to Task 1 ===
+<a href="#tsk-first" class="quarto-xref">Task&nbsp;1</a>
+
+=== Reference to Task 2 ===
+<a href="#tsk-second" class="quarto-xref">Task&nbsp;2</a>
+
+=== Reference to Task 3 ===
+<a href="#tsk-third" class="quarto-xref">Task&nbsp;3</a>

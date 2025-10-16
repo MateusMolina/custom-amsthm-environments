@@ -107,6 +107,7 @@ function process_custom_amsthm(meta)
   end
   
   -- Extract chapter number from Span with class "chapter-number" in title
+  current_section = nil  -- Reset for each document
   if meta.title then
     for i = 1, #meta.title do
       local elem = meta.title[i]
@@ -122,8 +123,15 @@ function process_custom_amsthm(meta)
     end
   end
   
-  -- Reset state file on first chapter
+  -- Reset state file on first chapter or non-book documents
   if not current_section or current_section == "1" then
+    -- Reset in-memory state for fresh start
+    custom_amsthm_envs = {}
+    amsthm_counters = {}
+    current_counters = {}
+    section_counters = {}
+    new_ids_this_chapter = {}
+    
     local file = io.open(state_file, "w")
     if file then
       file:write(serialize_table({counters = {}, values = {}, files = {}}) .. "\n")
