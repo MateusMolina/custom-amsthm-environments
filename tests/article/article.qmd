@@ -106,3 +106,15 @@ A **widget** is a conceptual object.
 :::
 
 Both @thm-standard and @def-standard should work alongside our custom environments like @prm-first and @tsk-key.
+
+## Testing Additional Classes
+
+Custom environments should preserve additional CSS classes passed to them:
+
+::: {#prm-classes .box .test-class}
+## Problem with Classes
+
+This problem has additional CSS classes `.box` and `.test-class` that should be preserved in the HTML output.
+:::
+
+Reference: See @prm-classes for an example with custom classes.

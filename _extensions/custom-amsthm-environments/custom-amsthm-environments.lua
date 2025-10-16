@@ -282,13 +282,20 @@ function handle_amsthm_div(div)
         return content
       else
         -- For HTML output, create a styled div matching Quarto's built-in format
-        local html_class = "theorem"
         local html_title = env.name
         if env.numbered then
           html_title = html_title .. " " .. current_number
         end
         if title ~= "" then
           html_title = html_title .. title
+        end
+        
+        -- Preserve original classes and add "theorem" class
+        local html_classes = {"theorem"}
+        if div.classes then
+          for _, cls in ipairs(div.classes) do
+            table.insert(html_classes, cls)
+          end
         end
         
         local content = {}
@@ -323,7 +330,7 @@ function handle_amsthm_div(div)
           end
         end
         
-        return pandoc.Div(content, {class = html_class, id = id})
+        return pandoc.Div(content, pandoc.Attr(id, html_classes))
       end
     end
   end

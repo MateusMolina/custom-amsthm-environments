@@ -41,3 +41,11 @@
 <div id="prm-subsection2" class="theorem">
 <p><span class="theorem-title"><strong>Problem 4 (Deeper Problem)</strong></span> This problem is in section 2.2.1.</p>
 </div>
+
+=== Problem with additional classes ===
+<div id="prm-classes" class="theorem box test-class">
+<p><span class="theorem-title"><strong>Problem 5 (Problem with Classes)</strong></span> This problem has additional CSS classes <code>.box</code> and <code>.test-class</code> that should be preserved in the HTML output.</p>
+</div>
+
+=== Reference to Problem with classes ===
+<a href="#prm-classes" class="quarto-xref">Problem&nbsp;5</a>
