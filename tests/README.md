@@ -11,7 +11,6 @@ python run-tests.py
 # Run tests for specific project
 python run-tests.py book
 python run-tests.py article
-python run-tests.py global-reset
 ```
 
 ## Expected File Format
@@ -51,14 +50,3 @@ The test runner:
 
 - `html` → `quarto render --to html` → `.html` files
 - `tex` → `quarto render --to latex` → `.tex` files
-
-## Special Tests
-
-### Global Numbering Reset Test
-
-The `global-reset` project tests that global numbering resets properly between renders. This test includes a pre-existing "dirty" state file (`.quarto/amsthm-state-53095.lua`) that simulates a previous render with counters at 3.
-
-When the test runs, the fix ensures that:
-1. The counters reset despite the dirty state file
-2. Task numbers are correctly shown as 1, 2, 3 (not 4, 5, 6)
-3. The state properly resets for standalone documents
