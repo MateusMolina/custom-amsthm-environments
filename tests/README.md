@@ -12,9 +12,6 @@ python run-tests.py
 python run-tests.py book
 python run-tests.py article
 python run-tests.py global-reset
-
-# Run global numbering reset test (multiple renders)
-python test-global-reset.py
 ```
 
 ## Expected File Format
@@ -59,14 +56,9 @@ The test runner:
 
 ### Global Numbering Reset Test
 
-The `test-global-reset.py` script specifically tests that global numbering resets properly between renders. This is important because Quarto may reuse Lua state across renders in some scenarios.
+The `global-reset` project tests that global numbering resets properly between renders. This test includes a pre-existing "dirty" state file (`.quarto/amsthm-state-53095.lua`) that simulates a previous render with counters at 3.
 
-To run this test:
-```bash
-python test-global-reset.py
-```
-
-This test:
-1. Renders the `global-reset` project 3 times consecutively
-2. Verifies that Task numbers are 1, 2, 3 in each render
-3. Ensures counters reset properly and don't increment across renders
+When the test runs, the fix ensures that:
+1. The counters reset despite the dirty state file
+2. Task numbers are correctly shown as 1, 2, 3 (not 4, 5, 6)
+3. The state properly resets for standalone documents

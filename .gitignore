@@ -5,3 +5,4 @@ _output
 
 tests/**/_extensions
 .quarto
+!tests/global-reset/.quarto/amsthm-state-53095.lua
