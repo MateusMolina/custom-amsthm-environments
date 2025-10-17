@@ -11,6 +11,12 @@ python run-tests.py
 # Run tests for specific project
 python run-tests.py book
 python run-tests.py article
+
+# Test for global counter stability during re-renders (simulates quarto preview)
+python test-preview-behavior.py
+
+# Verify the fix logic with simulated state management
+python verify-fix-logic.py
 ```
 
 ## Expected File Format
@@ -50,3 +56,13 @@ The test runner:
 
 - `html` → `quarto render --to html` → `.html` files
 - `tex` → `quarto render --to latex` → `.tex` files
+
+## Preview Behavior Test
+
+The `test-preview-behavior.py` script specifically tests that global counters remain stable when individual chapters are re-rendered (simulating `quarto preview` behavior):
+
+1. Renders the entire book
+2. Re-renders a single chapter (chapter2.qmd)
+3. Verifies that global counter values don't increment
+
+This test addresses the issue where counters would increment every time a file was saved during `quarto preview`.
