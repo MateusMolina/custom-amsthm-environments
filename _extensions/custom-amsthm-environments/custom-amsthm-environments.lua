@@ -240,8 +240,14 @@ function handle_amsthm_div(div)
           current_number = current_section .. "." .. tostring(section_counters[key][current_section])
         else
           -- Global numbering
-          amsthm_counters[key] = amsthm_counters[key] + 1
-          current_number = tostring(amsthm_counters[key])
+          if current_counters[key][id] then
+            -- ID already numbered (from previous render of this file), reuse the number
+            current_number = current_counters[key][id]
+          else
+            -- New ID, increment counter
+            amsthm_counters[key] = amsthm_counters[key] + 1
+            current_number = tostring(amsthm_counters[key])
+          end
         end
         current_counters[key][id] = current_number
         
