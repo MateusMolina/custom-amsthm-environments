@@ -14,6 +14,9 @@ python run-tests.py article
 
 # Test for global counter stability during re-renders (simulates quarto preview)
 python test-preview-behavior.py
+
+# Verify the fix logic with simulated state management
+python verify-fix-logic.py
 ```
 
 ## Expected File Format
