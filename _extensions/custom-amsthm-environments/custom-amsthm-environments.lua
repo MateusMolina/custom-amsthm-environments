@@ -11,6 +11,7 @@ local current_file = nil
 local new_ids_this_chapter = {}
 local state_file = nil
 local is_book = false
+local project_root = nil
 
 function string_hash(str)
   local hash = 0
@@ -18,6 +19,40 @@ function string_hash(str)
     hash = (hash * 31 + string.byte(str, i)) % 1000000
   end
   return hash
+end
+
+function find_project_root()
+  -- First, try to use quarto.project.directory if available
+  if quarto and quarto.project and quarto.project.directory then
+    return quarto.project.directory
+  end
+  
+  -- Otherwise, search for _quarto.yml by walking up the directory tree
+  local current_dir = os.getenv("PWD") or "."
+  local max_depth = 10  -- Prevent infinite loops
+  
+  for i = 1, max_depth do
+    -- Check if _quarto.yml exists in current directory
+    local quarto_yml = current_dir .. "/_quarto.yml"
+    local file = io.open(quarto_yml, "r")
+    if file then
+      file:close()
+      return current_dir
+    end
+    
+    -- Move up one directory
+    if current_dir == "/" or current_dir == "." then
+      break
+    end
+    current_dir = current_dir:match("(.*/)[^/]+/?$") or "."
+    if not current_dir or current_dir == "" then
+      current_dir = "."
+      break
+    end
+  end
+  
+  -- Fall back to current directory
+  return "."
 end
 
 function read_state()
@@ -61,7 +96,14 @@ function serialize_table(tbl, indent)
 end
 
 function write_state()
-  os.execute("mkdir -p .quarto")
+  -- Ensure project_root is set
+  if not project_root then
+    project_root = find_project_root()
+  end
+  
+  -- Create .quarto folder in the project root
+  local quarto_dir = project_root .. "/.quarto"
+  os.execute("mkdir -p " .. quarto_dir)
   
   local files = {}
   for key, env in pairs(custom_amsthm_envs) do
@@ -93,6 +135,11 @@ function write_state()
 end
 
 function process_custom_amsthm(meta)
+  -- Find and set the project root directory
+  if not project_root then
+    project_root = find_project_root()
+  end
+  
   local project_id = "default"
   if meta.book and meta.book.title then
     project_id = pandoc.utils.stringify(meta.book.title)
@@ -100,7 +147,7 @@ function process_custom_amsthm(meta)
   elseif meta.title then
     project_id = pandoc.utils.stringify(meta.title)
   end
-  state_file = string.format(".quarto/amsthm-state-%d.lua", string_hash(project_id))
+  state_file = string.format("%s/.quarto/amsthm-state-%d.lua", project_root, string_hash(project_id))
   
   if PANDOC_STATE and PANDOC_STATE.output_file then
     current_file = PANDOC_STATE.output_file
